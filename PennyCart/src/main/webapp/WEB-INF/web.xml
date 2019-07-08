@@ -1,0 +1,87 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>LoginValidation</servlet-name>
+  	<display-name>LoginValidation</display-name>
+  	<description></description>
+  	<servlet-class>pennycart.LoginValidation</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>PennyMartLogin</servlet-name>
+  	<display-name>PennyMartLogin</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.PennyMartLogin</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CreateAccount</servlet-name>
+  	<display-name>CreateAccount</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.CreateAccount</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Cart</servlet-name>
+  	<display-name>Cart</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.Cart</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Products</servlet-name>
+  	<display-name>Products</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.Products</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ProductServlet</servlet-name>
+  	<display-name>ProductServlet</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.ProductServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewCart</servlet-name>
+  	<display-name>ViewCart</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.ViewCart</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteProduct</servlet-name>
+  	<display-name>DeleteProduct</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.DeleteProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LoginValidation</servlet-name>
+  	<url-pattern>/LoginValidation</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>PennyMartLogin</servlet-name>
+  	<url-pattern>/PennyMartLogin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CreateAccount</servlet-name>
+  	<url-pattern>/CreateAccount</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Cart</servlet-name>
+  	<url-pattern>/Cart</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Products</servlet-name>
+  	<url-pattern>/Products</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProductServlet</servlet-name>
+  	<url-pattern>/ProductServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewCart</servlet-name>
+  	<url-pattern>/ViewCart</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteProduct</servlet-name>
+  	<url-pattern>/DeleteProduct</url-pattern>
+  </servlet-mapping>
+</web-app>
