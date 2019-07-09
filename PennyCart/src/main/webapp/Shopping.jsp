@@ -25,6 +25,14 @@
 	</div>
 </div>
 
+<div style="color:red; text-align: center;">
+<%
+    if(null!=request.getAttribute("noSelection"))
+    {
+       	out.println(request.getAttribute("noSelection"));
+    }
+%>
+</div>
 
 <div style="color:red; text-align: center;">
 <%
@@ -51,6 +59,8 @@
 		</tr>	
 	</c:forEach>
 </table>
+	<input type="hidden" name="checkButton">
+
 <%
 		if(session.getAttribute("productsList")!=null){
 	%>
@@ -63,5 +73,6 @@
 
 </form>
 </div>
+
 </body>
 </html>

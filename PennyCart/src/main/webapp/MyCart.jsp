@@ -25,23 +25,35 @@
 }*/
 function total(val1,val2,val3,val4){
 	  var price = document.getElementById(val2).value;
-	  var count = document.getElementById(val3).value;
-	  var prevCount = document.getElementById(val4).value;
-	  var numPrice=new Number(price);
-	  var numCount=new Number(count);
-	  var prevGrandTotal=document.getElementById('grandTotal').value;
-	  var prevTotal = (parseInt(price)*parseInt(prevCount));
-	  var total = (parseInt(price)*parseInt(count)) ;
-	  var grandTotal=(parseInt(prevGrandTotal)-parseInt(prevTotal));
+	  var count = parseInt(document.getElementById(val3).value);
+		  var prevCount = parseInt(document.getElementById(val4).value);
+		  var numPrice=new Number(price);
+		  var numCount=new Number(count);
+		  var prevGrandTotal=document.getElementById('grandTotal').value;
+		  var prevTotal = (parseInt(price)*parseInt(prevCount));
+		  var total = (parseInt(price)*parseInt(count)) ;
+		  var grandTotal=(parseInt(prevGrandTotal)-parseInt(prevTotal));
+		  
+		  if(count>prevCount){
+			  var diff=(parseInt(count)-parseInt(prevCount));
+			  var newTotal=(parseInt(diff)*parseInt(price));
+		  }
+		  
+		  
+		  var finalTotal=(parseInt(newTotal)+parseInt(prevGrandTotal));
+		  
+	    document.getElementById(val1).value = total;
+	    document.getElementById(1+val3).value=count;
+	    document.getElementById('grandTotal').value=finalTotal;
 	  
-	  
-	  var finalTotal=(parseInt(total)+parseInt(grandTotal));
-	  
-    document.getElementById(val1).value = total;
-    document.getElementById(1+val3).value=count;
-    document.getElementById('grandTotal').value=finalTotal;
-
     }
+ function fun(val1){
+	  var count = parseInt(document.getElementById(val1).value);
+	if(!isNaN(count)){
+		console.log('not a number');
+		return 'not a number';
+	}
+ }
 </script>
 </head>
 <body>
@@ -58,19 +70,28 @@ function total(val1,val2,val3,val4){
 	<%} %>
 <c:forEach var="buyprod" items="${sessionScope.cartList}" varStatus="status">
 	<c:set var="total" value="${buyprod.price*buyprod.count+total}"></c:set>
+	
+		<c:set var="count" value="${buyprod.count}"></c:set>
 
-		<input type="hidden" id="prevTotal${status.index}" value="${buyprod.count}">
+		<input type="hidden" id="prevCount${status.index}" value="${count}">
+		
+	<c:set var="remTotal" value="${total-buyprod.price*buyprod.count}"></c:set>
+
+		<input type="hidden" id="remTotal${status.index}" value="${remTotal}">
+
 
 	<tr>
 		<td id="pName${status.index}">${buyprod.productName}</td> 
 		<td><input id="pPrice${status.index}" type="text" value="${buyprod.price}" readonly="readonly"></td>
-		<td><input type="number" id="pQuant${status.index}" type="text" maxlength="2" min="1" max="${buyprod.quantity}" value="${buyprod.count}" onchange="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevTotal${status.index}')" onkeyup="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevTotal${status.index}')" onkeydown="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevTotal${status.index}')" onselect="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevTotal${status.index}')"></td>
+		<td><input type="number" name="inCount" id="pQuant${status.index}" type="text" maxlength="2" min="1" max="${buyprod.quantity}" value="${buyprod.count}" onchange="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}'),fun('prevCount${status.index}')" onkeyup="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}')" onkeydown="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}')" onselect="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}')"></td>
 		<td>$<input type="text" id="total${status.index}" value="${buyprod.price*buyprod.count}" readonly="readonly"></td>
 		<td><form action="DeleteProduct" method="post">
-		<button type="submit" name="delete" value="${buyprod.productId}">Delete</button>
-        
+		<input type="hidden" name="delete" value="${buyprod.productId}">
+		<input type="submit" value="Delete">        
    		</form></td>
 	<tr>
+				<c:set var="count" value="${param.inCount}"></c:set>
+	
 </c:forEach>
 <%
     if(null==request.getAttribute("errorCart"))
@@ -92,7 +113,7 @@ function total(val1,val2,val3,val4){
 		<td><input type="hidden" id="1pName${status.index}" name="pCartName" value="${updProd.productName}"></td> 
 		<td><input type="hidden" id="1pPrice${status.index}" type="text" value="${updProd.price}" readonly="readonly"></td>
 		<td><input type="hidden" name="pCartCount" id="1pQuant${status.index}" type="text" maxlength="2" max="${buyprod.quantity}" value="1" onchange="total('total${status.index}','pPrice${status.index}','pQuant${status.index}')" onkeyup="total('total${status.index}','pPrice${status.index}','pQuant${status.index}')"></td>
-		<td><input type="hidden" id="1total${status.index}" value="${updProd.price}" readonly="readonly"></td>
+		<td><input type="hidden" id="1total${status.index}" value="${updProd.price*updProd.count}" readonly="readonly"></td>
 	</tr>
 </c:forEach>
 </table>
@@ -103,12 +124,14 @@ function total(val1,val2,val3,val4){
 </form>
 <%} %>
 
+<div style="line-height: 1.0em; height: 1em;"></div>
+
 <%
     if(null==request.getAttribute("errorCart"))
     {%>
 	<form action="CheckOut.jsp" method="get">
 	
-		<input type="submit" value="Check Out">
+		<center><input type="submit" value="Check Out"></center>
 	
 	</form>
 <%} %>
@@ -117,6 +140,23 @@ function total(val1,val2,val3,val4){
     if(null!=request.getAttribute("errorCart"))
     {
        	out.println(request.getAttribute("errorCart"));
+    }
+%>
+</div>
+
+<div style="color:red; text-align: center;">
+<%
+    if(null!=request.getAttribute("errorCart"))
+    {
+%>
+
+	<form action="Shopping.jsp">
+	
+	<center><input type="submit" value="Back to Shopping"></center>
+	
+	</form>
+
+<%
     }
 %>
 </div>

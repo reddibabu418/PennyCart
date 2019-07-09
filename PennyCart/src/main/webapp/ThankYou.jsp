@@ -8,7 +8,7 @@
 </head>
 <body style="background-image: url('uimage.jpg');background-size: contain;background-repeat: no-repeat;background-size: cover;">
 <label style="float: right;"><a href="Logout.jsp">Logout</a></label>
-<h3 style="color: #DA621E; padding-top: 50px" align="center">Thank you for shopping with us  Mr. <%= session.getAttribute("name") %>!</h3>
+<h3 style="color: green; padding-top: 50px" align="center">Your Payment is Successful! Thank you for shopping with us  Mr. <%= session.getAttribute("name") %>!</h3>
 <form action="Shopping.jsp">
 	<center><input type="submit" value="Back to Store" style="align-items: center;justify-content: center;"></center>
 </form>
