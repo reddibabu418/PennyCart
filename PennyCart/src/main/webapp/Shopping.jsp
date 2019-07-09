@@ -11,23 +11,22 @@
 <body style="background-image: url('uimage.jpg');background-size: contain;background-repeat: no-repeat;background-size: cover;">
 <label style="float: right;"><a href="Logout.jsp">Logout</a></label>
 <h3 style="color: #DA621E; padding-top: 50px" align="center">Choose the items from below list and Enjoy your shopping Mr. <%= session.getAttribute("name") %>!</h3>
-
-<form action="ProductServlet" method="GET">
-	<div style="padding-left: 45%; font: #DA621E;">
-	<input type="submit" value="ViewProducts">
+<div style="">
+	<div style=" width:400px; font: #DA621E;">
+		<form action="ViewCart" method="post" style="">
+		
+			<input type="submit" value="ViewCart">
+		</form>
 	</div>
-</form>
-
-<div style="color:red">
-<%
-    if(null!=request.getAttribute("errorCart"))
-    {
-       	out.println(request.getAttribute("errorCart"));
-    }
-%>
+	<div style="float:right; font: #DA621E;">
+		<form action="ProductServlet" method="GET">
+			<input type="submit" value="ViewProducts">
+		</form>
+	</div>
 </div>
 
-<div style="color:red">
+
+<div style="color:red; text-align: center;">
 <%
     if(null!=request.getAttribute("errorMessage"))
     {
@@ -35,7 +34,7 @@
     }
 %>
 </div>
-
+<div>
 <form method="post" action="Cart">
 <table align="center" style="color: #DA621E;">
 	<% String s=":"; %>
@@ -55,7 +54,7 @@
 <%
 		if(session.getAttribute("productsList")!=null){
 	%>
-<div style="padding-left: 45%; font: #DA621E;">
+<div style="padding-left: 45%;  font: #DA621E;">
 
 <input type="submit" value="Add to Cart">
 </div>
@@ -63,8 +62,6 @@
 
 
 </form>
-<form action="ViewCart" method="post" style="">
-	<input type="submit" value="ViewCart">
-</form>
+</div>
 </body>
 </html>

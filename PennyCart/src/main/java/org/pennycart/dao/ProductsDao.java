@@ -77,7 +77,9 @@ public class ProductsDao {
                 String department = result.getString("department");
                 int quantity = result.getInt("quantity");
                 double price = result.getDouble("price");
+                int count=result.getInt("count");
                 Products products = new Products(productid, productname, department, quantity, price);
+                products.setCount(count);
                 productsList.add(products);        
             }
             
@@ -92,7 +94,6 @@ public class ProductsDao {
 
 	}
 	public void deleteCartProduct(int prodId){
-		List<Products> productsList=new ArrayList<Products>();
 		try {
 			Connection connection = DatabaseConnection.initializeDatabase();
 			String sql = "delete from cart where productid="+prodId;;
@@ -117,5 +118,58 @@ public class ProductsDao {
 			e.printStackTrace();
 		}
 
+	}
+	public void updateCart(String username,String prodName,int count){
+		try {
+			Connection connection = DatabaseConnection.initializeDatabase();
+			String sql = "update cart set count="+count+" where username='"+username+"' and productname='"+prodName+"'";
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            
+         
+            
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	public void updateProduct(String productName, int quantity) {
+		try {
+			Connection connection = DatabaseConnection.initializeDatabase();
+			String sql = "update products set quantity=quantity-"+quantity+" where productname='"+productName+"'";	
+			Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            
+         
+            
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void emptyCart(String username) {
+		try {
+			Connection connection = DatabaseConnection.initializeDatabase();
+			String sql = "delete from cart where username='"+username+"'";	
+			Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            
+         
+            
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

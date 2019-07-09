@@ -48,7 +48,8 @@ public class DeleteProduct extends HttpServlet {
 		List<Products> cartList =productsDao.getUserCart(user1);
 		if(cartList.isEmpty()) {
 			request.setAttribute("errorCart", "No Products Available in cart");
-            RequestDispatcher rd = request.getRequestDispatcher("/Shopping.jsp");
+			session.setAttribute("cartList", cartList);
+            RequestDispatcher rd = request.getRequestDispatcher("/MyCart.jsp");
             rd.forward(request, response);
 		}
 		else {

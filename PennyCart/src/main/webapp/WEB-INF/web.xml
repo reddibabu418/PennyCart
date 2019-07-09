@@ -52,6 +52,18 @@
   	<description></description>
   	<servlet-class>org.pennycart.servlet.DeleteProduct</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UpdateCart</servlet-name>
+  	<display-name>UpdateCart</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.UpdateCart</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CheckOutServlet</servlet-name>
+  	<display-name>CheckOutServlet</display-name>
+  	<description></description>
+  	<servlet-class>org.pennycart.servlet.CheckOutServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>LoginValidation</servlet-name>
   	<url-pattern>/LoginValidation</url-pattern>
@@ -83,5 +95,13 @@
   <servlet-mapping>
   	<servlet-name>DeleteProduct</servlet-name>
   	<url-pattern>/DeleteProduct</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UpdateCart</servlet-name>
+  	<url-pattern>/UpdateCart</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CheckOutServlet</servlet-name>
+  	<url-pattern>/CheckOutServlet</url-pattern>
   </servlet-mapping>
 </web-app>

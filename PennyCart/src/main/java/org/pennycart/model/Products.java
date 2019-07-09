@@ -6,6 +6,7 @@ public class Products {
 	private String department;
 	private int quantity;
 	private double price;
+	private int count;
 	public Products(int productId, String productName, String department, int quantity, double price) {
 		this.productId = productId;
 		this.productName = productName;
@@ -28,6 +29,13 @@ public class Products {
 	public double getPrice() {
 		return price;
 	}	
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public String toString() {
 		return productId+":"+productName+":"+department+":"+quantity+":"+price;
 	}

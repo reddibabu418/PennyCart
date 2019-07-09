@@ -3,7 +3,6 @@ package org.pennycart.servlet;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,15 +13,15 @@ import org.pennycart.dao.ProductsDao;
 import org.pennycart.model.Products;
 
 /**
- * Servlet implementation class ViewCart
+ * Servlet implementation class CheckOutServlet
  */
-public class ViewCart extends HttpServlet {
+public class CheckOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewCart() {
+    public CheckOutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,21 +40,26 @@ public class ViewCart extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		String user1=(String) session.getAttribute("name");
-		
-		
-		ProductsDao productsDao = new ProductsDao();
-		List<Products> cartList =productsDao.getUserCart(user1);
-		if(cartList.isEmpty()) {
-			request.setAttribute("errorCart", "No Products Available in cart");
-			session.setAttribute("cartList", cartList);
-            RequestDispatcher rd = request.getRequestDispatcher("/MyCart.jsp");
-            rd.forward(request, response);
+		String[] prodNames=request.getParameterValues("checkProductName");
+		String[] prodCount=request.getParameterValues("checkProductCount");
+		String[] prodPrice=request.getParameterValues("checkProductPrice");
+
+		System.out.println();
+		for(int i=0;i<prodNames.length;i++) {
+			ProductsDao productsDao = new ProductsDao();
+			productsDao.updateProduct(prodNames[i],Integer.parseInt( prodCount[i]));
+			
+			
+			System.out.println(prodNames[i]+"\t"+prodCount[i]);
 		}
-		else {
-			session.setAttribute("cartList", cartList);
-			response.sendRedirect("MyCart.jsp");
-		}
-	
+		
+		ProductsDao productsoutSideLoop = new ProductsDao();
+		productsoutSideLoop.emptyCart(user1);
+		List<Products> cartList =productsoutSideLoop.getUserCart(user1);
+
+		session.setAttribute("cartList", cartList);
+		response.sendRedirect("ThankYou.jsp");
+		
 	}
 
 }
