@@ -13,19 +13,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>MyCart</title>
 <script type="text/javascript">
-/*function calc(val1,val2,val3) 
-{
-  var price = document.getElementById(val1).value;
-  var count = document.getElementById(val2).value;
-  document.write(price);
-  document.write(count);
-  var total = parseFloat(price) * val2;
-  if (!isNaN(total))
-    document.getElementById(val3).innerHTML = total;
-}*/
+
 function total(val1,val2,val3,val4){
 	  var price = document.getElementById(val2).value;
 	  var count = parseInt(document.getElementById(val3).value);
+	  if(!isNaN(count)){
 		  var prevCount = parseInt(document.getElementById(val4).value);
 		  var numPrice=new Number(price);
 		  var numCount=new Number(count);
@@ -34,10 +26,15 @@ function total(val1,val2,val3,val4){
 		  var total = (parseInt(price)*parseInt(count)) ;
 		  var grandTotal=(parseInt(prevGrandTotal)-parseInt(prevTotal));
 		  
-		  if(count>prevCount){
 			  var diff=(parseInt(count)-parseInt(prevCount));
 			  var newTotal=(parseInt(diff)*parseInt(price));
-		  }
+		  
+			   /* document.getElementById('grandTotal').value=prevCount;
+
+			  var diff=(parseInt(prevCount)-parseInt(count));
+
+			  var newTotal=(parseInt(diff)*parseInt(price)); */
+		  
 		  
 		  
 		  var finalTotal=(parseInt(newTotal)+parseInt(prevGrandTotal));
@@ -45,14 +42,17 @@ function total(val1,val2,val3,val4){
 	    document.getElementById(val1).value = total;
 	    document.getElementById(1+val3).value=count;
 	    document.getElementById('grandTotal').value=finalTotal;
-	  
+	  }
     }
- function fun(val1){
+ function assignCount(val1,val2){
 	  var count = parseInt(document.getElementById(val1).value);
-	if(!isNaN(count)){
-		console.log('not a number');
-		return 'not a number';
-	}
+
+	 	document.getElementById(val2).value = count;
+	  
+}
+ function calcGrandTotal(val1,val2,val3,val4,val5){
+	 total(val1,val2,val3,val4);
+	 assignCount(val3,val4);
  }
 </script>
 </head>
@@ -75,15 +75,13 @@ function total(val1,val2,val3,val4){
 
 		<input type="hidden" id="prevCount${status.index}" value="${count}">
 		
-	<c:set var="remTotal" value="${total-buyprod.price*buyprod.count}"></c:set>
 
-		<input type="hidden" id="remTotal${status.index}" value="${remTotal}">
 
 
 	<tr>
 		<td id="pName${status.index}">${buyprod.productName}</td> 
 		<td><input id="pPrice${status.index}" type="text" value="${buyprod.price}" readonly="readonly"></td>
-		<td><input type="number" name="inCount" id="pQuant${status.index}" type="text" maxlength="2" min="1" max="${buyprod.quantity}" value="${buyprod.count}" onchange="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}'),fun('prevCount${status.index}')" onkeyup="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}')" onkeydown="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}')" onselect="total('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}')"></td>
+		<td><input type="number" name="inCount" id="pQuant${status.index}" type="text" maxlength="2" min="1" max="${buyprod.quantity}" value="${buyprod.count}" onchange="calcGrandTotal('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}','${buyprod.quantity}')" onkeyup="calcGrandTotal('total${status.index}','pPrice${status.index}','pQuant${status.index}','prevCount${status.index}','${buyprod.quantity}')" ></td>
 		<td>$<input type="text" id="total${status.index}" value="${buyprod.price*buyprod.count}" readonly="readonly"></td>
 		<td><form action="DeleteProduct" method="post">
 		<input type="hidden" name="delete" value="${buyprod.productId}">
@@ -143,22 +141,23 @@ function total(val1,val2,val3,val4){
     }
 %>
 </div>
+<div style="line-height: 1.0em; height: 1em;"></div>
 
-<div style="color:red; text-align: center;">
-<%
-    if(null!=request.getAttribute("errorCart"))
-    {
-%>
+<div style="">
+
 
 	<form action="Shopping.jsp">
 	
+	<div style="">
+	
+	
 	<center><input type="submit" value="Back to Shopping"></center>
+	
+	</div>
 	
 	</form>
 
-<%
-    }
-%>
+
 </div>
 
 
