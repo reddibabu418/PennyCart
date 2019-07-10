@@ -16,11 +16,11 @@
 		<table style="margin-left: 40%; margin-right: 0%;">
 			<tr style="text-align: left; color: #DA621E;">
 				<td>UserName</td>
-				<td><input type="text" name="uname"></td>
+				<td><input type="text" name="uname" required></td>
 			</tr>
 			<tr style="text-align: left; color: #DA621E;">
 				<td>Password</td>
-				<td><input type="password" name="pwd"></td>
+				<td><input type="password" name="pwd" required></td>
 			</tr>
 			<tr style="text-align: left; color: #DA621E;">
 				<td></td>
@@ -30,7 +30,7 @@
 		</table>
 
 	</form>
-	<div style="color: red">
+	<div style="color: red; text-align: center;">
 		<%
 			if (null != request.getAttribute("errorMessage")) {
 				out.println(request.getAttribute("errorMessage"));

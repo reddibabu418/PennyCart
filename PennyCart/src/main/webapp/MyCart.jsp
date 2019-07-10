@@ -47,9 +47,15 @@
 		document.getElementById(val2).value = count;
 
 	}
+	function changeCartCount(val1){
+		var newCount = parseInt(document.getElementById(val1).value);
+		document.getElementById(1+val1).value = newCount;
+
+	}
 	function calcGrandTotal(val1, val2, val3, val4, val5) {
 		total(val1, val2, val3, val4);
 		assignCount(val3, val4);
+		changeCartCount(val3);
 	}
 </script>
 </head>
