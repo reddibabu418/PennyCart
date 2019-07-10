@@ -43,19 +43,20 @@
 	}
 	function assignCount(val1, val2) {
 		var count = parseInt(document.getElementById(val1).value);
-
+		if(!Number.isNaN(count)){
 		document.getElementById(val2).value = count;
-
+		}
 	}
-	function changeCartCount(val1){
+	function countExceed(val1,val2){
 		var newCount = parseInt(document.getElementById(val1).value);
 		document.getElementById(1+val1).value = newCount;
 
 	}
 	function calcGrandTotal(val1, val2, val3, val4, val5) {
+
 		total(val1, val2, val3, val4);
 		assignCount(val3, val4);
-		changeCartCount(val3);
+
 	}
 </script>
 </head>
@@ -150,7 +151,7 @@
 		</table>
 
 		<div style="padding-left: 45%; font: #DA621E;">
-			<input type="submit" value="Update Cart" onclick="">
+			<input type="submit" value="Update Cart">
 		</div>
 	</form>
 	<%
