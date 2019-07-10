@@ -150,7 +150,7 @@
 		</table>
 
 		<div style="padding-left: 45%; font: #DA621E;">
-			<input type="submit" value="Update Cart">
+			<input type="submit" value="Update Cart" onclick="">
 		</div>
 	</form>
 	<%

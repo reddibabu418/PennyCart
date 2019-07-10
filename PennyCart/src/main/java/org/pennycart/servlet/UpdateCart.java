@@ -50,10 +50,12 @@ public class UpdateCart extends HttpServlet {
 		System.out.println();
 		for (int i = 0; i < prodNames.length; i++) {
 			ProductsDao productsDao = new ProductsDao();
+			if(Integer.parseInt(prodCount[i])>1) {
 			productsDao.updateCart(user1, prodNames[i], Integer.parseInt(prodCount[i]));
+			
 			List<Products> cartList = productsDao.getUserCart(user1);
-
 			session.setAttribute("cartList", cartList);
+			}
 			System.out.println(prodNames[i] + "\t" + prodCount[i]);
 		}
 		response.sendRedirect("MyCart.jsp");
