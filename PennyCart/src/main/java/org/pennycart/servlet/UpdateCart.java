@@ -18,53 +18,54 @@ import org.pennycart.model.Products;
  */
 public class UpdateCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UpdateCart() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public UpdateCart() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String user1=(String) session.getAttribute("name");
-		String[] prodNames=request.getParameterValues("pCartName");
-		String[] prodCount=request.getParameterValues("pCartCount");
+		String user1 = (String) session.getAttribute("name");
+		String[] prodNames = request.getParameterValues("pCartName");
+		String[] prodCount = request.getParameterValues("pCartCount");
 
 		System.out.println();
-		for(int i=0;i<prodNames.length;i++) {
+		for (int i = 0; i < prodNames.length; i++) {
 			ProductsDao productsDao = new ProductsDao();
 			productsDao.updateCart(user1, prodNames[i], Integer.parseInt(prodCount[i]));
-			List<Products> cartList =productsDao.getUserCart(user1);
+			List<Products> cartList = productsDao.getUserCart(user1);
 
 			session.setAttribute("cartList", cartList);
-			System.out.println(prodNames[i]+"\t"+prodCount[i]);
+			System.out.println(prodNames[i] + "\t" + prodCount[i]);
 		}
 		response.sendRedirect("MyCart.jsp");
 
-		/*List<Products> cartList =productsDao.getUserCart(user1);
-		if(cartList.isEmpty()) {
-			request.setAttribute("errorCart", "No Products Available in cart");
-			session.setAttribute("cartList", cartList);
-            RequestDispatcher rd = request.getRequestDispatcher("/MyCart.jsp");
-            rd.forward(request, response);
-		}
-		else {
-			session.setAttribute("cartList", cartList);
-			response.sendRedirect("MyCart.jsp");
-		}*/
+		/*
+		 * List<Products> cartList =productsDao.getUserCart(user1);
+		 * if(cartList.isEmpty()) { request.setAttribute("errorCart",
+		 * "No Products Available in cart"); session.setAttribute("cartList", cartList);
+		 * RequestDispatcher rd = request.getRequestDispatcher("/MyCart.jsp");
+		 * rd.forward(request, response); } else { session.setAttribute("cartList",
+		 * cartList); response.sendRedirect("MyCart.jsp"); }
+		 */
 	}
 
 }

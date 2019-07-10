@@ -17,49 +17,52 @@ import org.pennycart.model.Products;
  */
 public class CheckOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CheckOutServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public CheckOutServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String user1=(String) session.getAttribute("name");
-		String[] prodNames=request.getParameterValues("checkProductName");
-		String[] prodCount=request.getParameterValues("checkProductCount");
-		String[] prodPrice=request.getParameterValues("checkProductPrice");
+		String user1 = (String) session.getAttribute("name");
+		String[] prodNames = request.getParameterValues("checkProductName");
+		String[] prodCount = request.getParameterValues("checkProductCount");
+		String[] prodPrice = request.getParameterValues("checkProductPrice");
 
 		System.out.println();
-		for(int i=0;i<prodNames.length;i++) {
+		for (int i = 0; i < prodNames.length; i++) {
 			ProductsDao productsDao = new ProductsDao();
-			productsDao.updateProduct(prodNames[i],Integer.parseInt( prodCount[i]));
-			
-			
-			System.out.println(prodNames[i]+"\t"+prodCount[i]);
+			productsDao.updateProduct(prodNames[i], Integer.parseInt(prodCount[i]));
+
+			System.out.println(prodNames[i] + "\t" + prodCount[i]);
 		}
-		
+
 		ProductsDao productsoutSideLoop = new ProductsDao();
 		productsoutSideLoop.emptyCart(user1);
-		List<Products> cartList =productsoutSideLoop.getUserCart(user1);
+		List<Products> cartList = productsoutSideLoop.getUserCart(user1);
 
 		session.setAttribute("cartList", cartList);
 		response.sendRedirect("ThankYou.jsp");
-		
+
 	}
 
 }

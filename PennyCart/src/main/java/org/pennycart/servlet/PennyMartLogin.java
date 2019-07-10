@@ -22,47 +22,47 @@ import org.pennycart.service.CustomerService;
 public class PennyMartLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * Default constructor. 
-     */
-    public PennyMartLogin() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 */
+	public PennyMartLogin() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		ResultSet rs;
 		try {
 			Connection con = DatabaseConnection.initializeDatabase();
 			PreparedStatement data = con.prepareStatement("select * from customer");
-			rs=data.executeQuery();
-			boolean error=false;
-			String uname=request.getParameter("uname");
-			String pwd=request.getParameter("pwd");
-			while(rs.next()) {
-				
+			rs = data.executeQuery();
+			boolean error = false;
+			String uname = request.getParameter("uname");
+			String pwd = request.getParameter("pwd");
+			while (rs.next()) {
 
-				String fullname=rs.getString("FULLNAME");
-				int mobilenumber=rs.getInt("MOBILENUMBER");
-				String email=rs.getString("EMAIL");
-				String username=rs.getString("USERNAME");
-				String password=rs.getString("PASSWORD");
-				CustomerService customerService = new CustomerService(fullname, mobilenumber, email, username, password);
-				if(customerService.validateCredentials(uname, pwd)==true) {
-					error=true;
+				String fullname = rs.getString("FULLNAME");
+				int mobilenumber = rs.getInt("MOBILENUMBER");
+				String email = rs.getString("EMAIL");
+				String username = rs.getString("USERNAME");
+				String password = rs.getString("PASSWORD");
+				CustomerService customerService = new CustomerService(fullname, mobilenumber, email, username,
+						password);
+				if (customerService.validateCredentials(uname, pwd) == true) {
+					error = true;
 					break;
 				}
-				
-				
+
 			}
-			if(!error) {
+			if (!error) {
 				request.setAttribute("errorMessage", "Invalid username or password");
-                RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
-                rd.forward(request, response);
-			}
-			else {
+				RequestDispatcher rd = request.getRequestDispatcher("/Login.jsp");
+				rd.forward(request, response);
+			} else {
 				HttpSession session = request.getSession();
 				session.setAttribute("name", uname);
 				response.sendRedirect("Shopping.jsp");
@@ -78,9 +78,11 @@ public class PennyMartLogin extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 }

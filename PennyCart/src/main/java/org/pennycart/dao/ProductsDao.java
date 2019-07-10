@@ -11,25 +11,25 @@ import java.util.List;
 import org.pennycart.model.Products;
 
 public class ProductsDao {
-	
-	public List<Products> productsList(){
-		List<Products> productsList=new ArrayList<Products>();
+
+	public List<Products> productsList() {
+		List<Products> productsList = new ArrayList<Products>();
 		try {
 			Connection connection = DatabaseConnection.initializeDatabase();
 			String sql = "SELECT * FROM products where quantity!=0";
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-            
-            while (result.next()) {
-                int productid = result.getInt("productid");
-                String productname = result.getString("productname");
-                String department = result.getString("department");
-                int quantity = result.getInt("quantity");
-                double price = result.getDouble("price");
-                Products products = new Products(productid, productname, department, quantity, price);
-                productsList.add(products);        
-            }
-            
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+
+			while (result.next()) {
+				int productid = result.getInt("productid");
+				String productname = result.getString("productname");
+				String department = result.getString("department");
+				int quantity = result.getInt("quantity");
+				double price = result.getDouble("price");
+				Products products = new Products(productid, productname, department, quantity, price);
+				productsList.add(products);
+			}
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,10 +37,11 @@ public class ProductsDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return productsList;
+		return productsList;
 
 	}
-	public void addToCart(Products product, String username,int count) {
+
+	public void addToCart(Products product, String username, int count) {
 		try {
 			Connection con;
 			con = DatabaseConnection.initializeDatabase();
@@ -52,37 +53,38 @@ public class ProductsDao {
 			st.setInt(5, count);
 			st.setDouble(6, product.getPrice());
 			st.setString(7, product.getDepartment());
-			st.executeUpdate(); 
-			st.close(); 
-	        con.close();
+			st.executeUpdate();
+			st.close();
+			con.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
 	}
-	public List<Products> getUserCart(String user){
-		List<Products> productsList=new ArrayList<Products>();
+
+	public List<Products> getUserCart(String user) {
+		List<Products> productsList = new ArrayList<Products>();
 		try {
 			Connection connection = DatabaseConnection.initializeDatabase();
 			String sql = "SELECT * FROM cart where username = '" + user + "'";
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-            
-            while (result.next()) {
-                int productid = result.getInt("productid");
-                String productname = result.getString("productname");
-                String department = result.getString("department");
-                int quantity = result.getInt("quantity");
-                double price = result.getDouble("price");
-                int count=result.getInt("count");
-                Products products = new Products(productid, productname, department, quantity, price);
-                products.setCount(count);
-                productsList.add(products);        
-            }
-            
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+
+			while (result.next()) {
+				int productid = result.getInt("productid");
+				String productname = result.getString("productname");
+				String department = result.getString("department");
+				int quantity = result.getInt("quantity");
+				double price = result.getDouble("price");
+				int count = result.getInt("count");
+				Products products = new Products(productid, productname, department, quantity, price);
+				products.setCount(count);
+				productsList.add(products);
+			}
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,26 +92,27 @@ public class ProductsDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return productsList;
+		return productsList;
 
 	}
-	public void deleteCartProduct(int prodId){
+
+	public void deleteCartProduct(int prodId) {
 		try {
 			Connection connection = DatabaseConnection.initializeDatabase();
-			String sql = "delete from cart where productid="+prodId;;
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-            
-           /* while (result.next()) {
-                int productid = result.getInt("productid");
-                String productname = result.getString("productname");
-                String department = result.getString("department");
-                int quantity = result.getInt("quantity");
-                double price = result.getDouble("price");
-                Products products = new Products(productid, productname, department, quantity, price);
-                productsList.add(products);        
-            }*/
-            
+			String sql = "delete from cart where productid=" + prodId;
+			;
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(sql);
+
+			/*
+			 * while (result.next()) { int productid = result.getInt("productid"); String
+			 * productname = result.getString("productname"); String department =
+			 * result.getString("department"); int quantity = result.getInt("quantity");
+			 * double price = result.getDouble("price"); Products products = new
+			 * Products(productid, productname, department, quantity, price);
+			 * productsList.add(products); }
+			 */
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,15 +122,15 @@ public class ProductsDao {
 		}
 
 	}
-	public void updateCart(String username,String prodName,int count){
+
+	public void updateCart(String username, String prodName, int count) {
 		try {
 			Connection connection = DatabaseConnection.initializeDatabase();
-			String sql = "update cart set count="+count+" where username='"+username+"' and productname='"+prodName+"'";
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-            
-         
-            
+			String sql = "update cart set count=" + count + " where username='" + username + "' and productname='"
+					+ prodName + "'";
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(sql);
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -137,15 +140,15 @@ public class ProductsDao {
 		}
 
 	}
+
 	public void updateProduct(String productName, int quantity) {
 		try {
 			Connection connection = DatabaseConnection.initializeDatabase();
-			String sql = "update products set quantity=quantity-"+quantity+" where productname='"+productName+"'";	
+			String sql = "update products set quantity=quantity-" + quantity + " where productname='" + productName
+					+ "'";
 			Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-            
-         
-            
+			statement.executeUpdate(sql);
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -154,16 +157,14 @@ public class ProductsDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void emptyCart(String username) {
 		try {
 			Connection connection = DatabaseConnection.initializeDatabase();
-			String sql = "delete from cart where username='"+username+"'";	
+			String sql = "delete from cart where username='" + username + "'";
 			Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-            
-         
-            
+			statement.executeUpdate(sql);
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
