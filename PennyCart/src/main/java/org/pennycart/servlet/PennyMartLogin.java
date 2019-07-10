@@ -46,7 +46,7 @@ public class PennyMartLogin extends HttpServlet {
 			while (rs.next()) {
 
 				String fullname = rs.getString("FULLNAME");
-				int mobilenumber = rs.getInt("MOBILENUMBER");
+				int mobilenumber =0000;
 				String email = rs.getString("EMAIL");
 				String username = rs.getString("USERNAME");
 				String password = rs.getString("PASSWORD");
