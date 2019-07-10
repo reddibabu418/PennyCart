@@ -49,13 +49,20 @@
 	}
 	function countExceed(val1,val2){
 		var newCount = parseInt(document.getElementById(val1).value);
-		document.getElementById(1+val1).value = newCount;
+		if(newCount>val2){
+			document.getElementById(val1).value = val2;
+		}
+		else if(isNaN(newCount)){
+			document.getElementById(val1).value = 1;
+
+		}
 
 	}
 	function calcGrandTotal(val1, val2, val3, val4, val5) {
 
 		total(val1, val2, val3, val4);
 		assignCount(val3, val4);
+		countExceed(val3,val5)
 
 	}
 </script>
