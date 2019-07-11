@@ -16,7 +16,7 @@ public class ProductsDao {
 		List<Products> productsList = new ArrayList<Products>();
 		try {
 			Connection connection = DatabaseConnection.initializeDatabase();
-			String sql = "SELECT * FROM products where quantity!=0";
+			String sql = "SELECT * FROM products where quantity > 0";
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 
