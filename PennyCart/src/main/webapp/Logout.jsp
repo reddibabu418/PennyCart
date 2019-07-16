@@ -4,13 +4,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <title>Logout</title>
 </head>
-<body
+<body  onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
 	style="background-image: url('uimage.jpg'); background-size: contain; background-repeat: no-repeat; background-size: cover;">
 	<%
 		session.invalidate();
 		response.sendRedirect("index.jsp");
 	%>
+	<script type="text/javascript">
+window.history.forward();
+function noBack() { window.history.forward(); }
+</script>
 </body>
+
 </html>
